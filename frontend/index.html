@@ -1,23 +1,66 @@
-<canvas id=canvas width=400 height=350></canvas>
+<canvas id=canvas width=600 height=350></canvas>
+
+<br />
+<button id='clear'>Clear</button>
+<button id='submit'>Submit</button>
 
 <!-- <img src="images/music.jpg" /> -->
 
 <script>
-    const canvas = document.getElementById("canvas");
+  const canvas = document.getElementById("canvas");
+  const context = canvas.getContext("2d");
 
-//   var canvas = document.getElementById("canvas");
-          var context = canvas.getContext("2d");
-        //   context.fillStyle = "green";
-        //   context.fillRect(50, 50, 100, 100);    
+  const imageObj = new Image();
 
-  var imageObj = new Image();
+  imageObj.onload = function() {
+    context.drawImage(imageObj, 0, 0, 1200, 700, 0, 0, 600, 350);
+  };
+  imageObj.src = 'images/music.jpg';
 
-imageObj.onload = function() {
-  context.drawImage(imageObj, 0, 0, 800, 700, 0, 0, 400, 350);
-};
-imageObj.src = 'images/music.jpg';
+  canvas.width = 600; //parseInt(paint_style.getPropertyValue('width'));
+  canvas.height = 350; //parseInt(paint_style.getPropertyValue('height'));
 
-    // const img    = canvas.toDataURL("image/png");
+  let mouse = {x: 0, y: 0};
+ 
+  canvas.addEventListener('mousemove', function(e) {
+    mouse.x = e.pageX - this.offsetLeft;
+    mouse.y = e.pageY - this.offsetTop;
+  }, false);
 
-    // document.write('<img src="'+img+'"/>');
+  context.lineWidth = 3;
+  context.lineJoin = 'round';
+  context.lineCap = 'round';
+  context.strokeStyle = '#00CC99';
+ 
+  canvas.addEventListener('mousedown', function(e) {
+    context.beginPath();
+    context.moveTo(mouse.x, mouse.y);
+  
+      canvas.addEventListener('mousemove', onPaint, false);
+  }, false);
+ 
+  canvas.addEventListener('mouseup', function() {
+      canvas.removeEventListener('mousemove', onPaint, false);
+  }, false);
+  
+  var onPaint = function() {
+    context.lineTo(mouse.x, mouse.y);
+    context.stroke();
+  };
+
+
+
+
+
+  document.getElementById('clear').addEventListener('click', () => {
+    console.log('clear')
+    context.drawImage(imageObj, 0, 0, 1200, 700, 0, 0, 600, 350);
+
+  });
+
+  document.getElementById('submit').addEventListener('click', () => {
+    console.log('submit')
+    const img    = canvas.toDataURL("image/png");
+    document.write('<img src="'+img+'"/>');
+  });
 </script>
