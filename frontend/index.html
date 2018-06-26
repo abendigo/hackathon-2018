@@ -1,0 +1,23 @@
+<canvas id=canvas width=400 height=350></canvas>
+
+<!-- <img src="images/music.jpg" /> -->
+
+<script>
+    const canvas = document.getElementById("canvas");
+
+//   var canvas = document.getElementById("canvas");
+          var context = canvas.getContext("2d");
+        //   context.fillStyle = "green";
+        //   context.fillRect(50, 50, 100, 100);    
+
+  var imageObj = new Image();
+
+imageObj.onload = function() {
+  context.drawImage(imageObj, 0, 0, 800, 700, 0, 0, 400, 350);
+};
+imageObj.src = 'images/music.jpg';
+
+    // const img    = canvas.toDataURL("image/png");
+
+    // document.write('<img src="'+img+'"/>');
+</script>
