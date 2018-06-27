@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 from collections import Counter
-
+import converter as c
 
 # im = Image.open('/Users/daniel.pang/dev/hackathon-2018/sample/sample1.png')
 # pic = im.load()
@@ -11,19 +11,6 @@ from collections import Counter
 # print(im.size)
 # print(vals)
 
-def find_note(start, end, bar_dict):
-    '''
-    Hard coded key placements
-    '''
-    if start < bar_dict[0][0] and end_row < bar_dict[0][1]:
-        return 'G'
-    elif start < bar_dict[0][0] and end_row > bar_dict[0][1]
-        return 'F'
-    elif start > bar_dict[0][0] and
-
-    for i in range(4):
-        if
-
 def img_to_note(pixels, bar_dict):
     '''
     Accepts a list of list representing the pixel data and a dict with keys being
@@ -31,8 +18,8 @@ def img_to_note(pixels, bar_dict):
     Returns a musical note (output format TBD)
     '''
     # Input handling
-    if len(pixels) != 600 or len(pixels[0] != 900):
-        print 'Incorrect image size'
+    if len(pixels) != 600 or len(pixels[0]) != 900:
+        print('Incorrect image size')
         return
 
     min = 105
@@ -42,7 +29,7 @@ def img_to_note(pixels, bar_dict):
 
     # Count number of dark pixels in each row (black is 1, white is 0)
     # If number of pixels is within threshold of min and max then a note has been found
-    pixel_range = {'G':0, 'E': 0, 'C':0, 'A':0 'F':0, 'D':0}
+    pixel_range = {'G':0, 'E': 0, 'C':0, 'A':0, 'F':0, 'D':0}
     for row_index in range(len(pixels)):
         row = pixels[row_index]
         pixel_counts = Counter(row[230:])
@@ -68,15 +55,28 @@ def img_to_note(pixels, bar_dict):
     for key in pixel_range:
         pixel_range[key] = pixel_range[key]/total
 
-    top_2 = dict(sorted(pixel_range.iteritems(), key=operator.itemgetter(1), reverse=True)[:2])
-    print(top_2)
+    print(pixel_range)
 
+    sorted_pixel_list = list(reversed(sorted(pixel_range.items(), key=lambda x: x[1])))
+    print(sorted_pixel_list)
+    key1 = ''
+    key2 = ''
+    if sorted_pixel_list[0][1] >= 0.70:
+        key1 = sorted_pixel_list[0][1]
+    # top_2 = dict(sorted(pixel_range, key=pixel_range.get, reverse=True)[:2])
+    # print(top_2)
 
+im = Image.open("../../test/image.png")
+WIDTH = im.width
+LINE_VER_LEN = im.height
+pixel_list = c.make_pixel_list(list(im.getdata()))
+# gets the bar lines in format {0: (starting, ending)}
+bars = c.get_bar_coords(pixel_list)
+# for removing bars; list of all the lines that are a bar
+combined_bars = c.get_combined_bar_coords(pixel_list)
+# same as pixel_list but now vertical
+vertical_list = c.make_vertical_pixel_list(pixel_list)
+# remove staff bars
+c.remove_staffs(pixel_list, combined_bars)
 
-
-
-    if !found_note:
-        print 'Could not find note'
-        return
-
-    note = find_note(start_row, end_row, bar_dict)
+img_to_note(pixel_list, bars)

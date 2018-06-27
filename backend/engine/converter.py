@@ -35,7 +35,7 @@ def get_combined_bar_coords(pixel_list):
 		(s, e) = coord_dict[i]
 		for j in range(s, e+1):
 			all_coords.append(j)
-	
+
 	return all_coords
 
 def make_pixel_list(pixels):
@@ -78,16 +78,13 @@ def remove_staffs(pixel_list, staffs):
 im = Image.open("../../sample/sample3.png")
 WIDTH = im.width
 LINE_VER_LEN = im.height
-pixel_list = make_pixel_list(list(im.getdata()))
-# gets the bar lines in format {0: (starting, ending)}
-bars = get_bar_coords(pixel_list)
-# for removing bars; list of all the lines that are a bar
-combined_bars = get_combined_bar_coords(pixel_list)
-# same as pixel_list but now vertical
-vertical_list = make_vertical_pixel_list(pixel_list)
-# remove staff bars
-remove_staffs(pixel_list, combined_bars)
-print_pixels(pixel_list)
-
-
-
+# pixel_list = make_pixel_list(list(im.getdata()))
+# # gets the bar lines in format {0: (starting, ending)}
+# bars = get_bar_coords(pixel_list)
+# # for removing bars; list of all the lines that are a bar
+# combined_bars = get_combined_bar_coords(pixel_list)
+# # same as pixel_list but now vertical
+# vertical_list = make_vertical_pixel_list(pixel_list)
+# # remove staff bars
+# remove_staffs(pixel_list, combined_bars)
+# print_pixels(pixel_list)
