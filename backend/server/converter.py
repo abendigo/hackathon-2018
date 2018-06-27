@@ -69,7 +69,7 @@ def remove_staffs(pixel_list, staffs):
 		if i in staffs:
 			pixel_list[i] = empty_list
 
-im = Image.open("../../sample/sample3.png")
+im = Image.open("test.png")
 WIDTH = im.width
 LINE_VER_LEN = im.height
 # pixel_list = make_pixel_list(list(im.getdata()))

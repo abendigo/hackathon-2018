@@ -49,9 +49,11 @@ def parse_request():
     #fh.write(image_encode.decode('base64'))
     #fh.close()
 
-    im = Image.open(BytesIO(base64.b64decode(image_encode)))
-    im.save('test.png')
-    note_list = engine.engine(im)
+    new_im = Image.open(BytesIO(base64.b64decode(image_encode)))
+    new_im.save('test.png')
+
+    #im = Image.open('test.png')
+    note_list = engine.engine(new_im)
     
     # constants
     track = 0
