@@ -87,8 +87,8 @@ def img_to_note(pixels, bar_dict):
 
 
 def engine(im):
-    WIDTH = im.width
-    LINE_VER_LEN = im.height
+    WIDTH = 900
+    LINE_VER_LEN = 600
     pixel_list = c.make_pixel_list(list(im.getdata()))
     # gets the bar lines in format {0: (starting, ending)}
     bars = c.get_bar_coords(pixel_list)
