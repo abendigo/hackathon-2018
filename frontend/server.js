@@ -8,15 +8,16 @@ let app = express();
 
 app.listen(port);
 app.use(express.static('public'));
+app.use(bodyParser.json());
 
 const audio = {
     content: fs.readFileSync("public/audio/stereo.flac").toString('base64'),
 };
 
 // app.use(bodyParser);
-let parse = bodyParser.text();
+// let parse = bodyParser.json();
 
-app.post('/img2mus', parse, (req, res) => {
+app.post('/img2mus', (req, res) => {
     console.log('woot', req.body);
     res.json({audio: audio})
 });
