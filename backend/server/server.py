@@ -12,6 +12,28 @@ from midi2audio import FluidSynth
 app = Flask(__name__)
 CORS(app)
 
+note_to_midi = {
+    "D4": 62,
+    "E4": 64,
+    "F4": 65,
+    "G4": 67,
+    "A4": 69,
+    "B4": 71,
+    "C5": 72,
+    "D5": 74,
+    "E5": 76,
+    "F5": 77,
+    "G5": 79,
+}
+
+type_to_duration = {
+    "Q": 1,
+    "H": 2,
+    "W": 4,
+}
+
+sample_list = [["F5", "Q"], ["G5", "H"], ["F5", "W"]]
+
 @app.route("/")
 def hello():
     return "Moody is cool!"
@@ -21,26 +43,28 @@ def parse_request():
     request.get_data()
     image_data = request.data
     
-    # temp code
-    freq = 60
+    # constants
     track = 0
     channel = 0
     time = 0
-    duration = 1
-    tempo = 60
-    volume = 100
+    tempo = 171
+    volume = 126
 
     my_midi = MIDIFile(1)
     my_midi.addTempo(track, time, tempo)
-    my_midi.addNote(track, channel, freq, time, duration, volume)
-    my_midi.addNote(track, channel, freq + 2, time + 1, duration, volume)
+    prev_duration = 0
+    for counter, my_tuple in enumerate(sample_list):
+        note = my_tuple[0]
+        note_type = my_tuple[1]
+        midi_note = note_to_midi[note]
+        duration = type_to_duration[note_type]
+        my_midi.addNote(track, channel, midi_note, time, duration, volume)
+        time += duration
 
     with open("test.mid", "wb") as output_file:
         my_midi.writeFile(output_file)
 
-
     fs = FluidSynth()
-    os.chdir('/home/matt.lewis/hackathon/hackathon-2018/backend/server/')
     fs.midi_to_audio('test.mid', 'test.wav')
 
     with open("test.wav", "r") as input_file:
