@@ -1,6 +1,19 @@
 <!-- <script type='text/javascript' src='midi.js'></script> -->
 <!-- <script type='text/javascript' src='//www.midijs.net/lib/midi.js'></script> -->
 
+<fieldset>
+    <legend>Audio settings</legend>
+
+    <label for="volume">Volume</label>
+    <input type="range" id="volume" name="volume"
+           min="1" max="126" />
+
+    <label for="cowbell">Tempo</label>
+    <input type="range" id="tempo" name="tempo" 
+           min="40" max="170" value="90" />
+
+</fieldset>
+
 <canvas id=canvas width=900 height=600></canvas>
 
 <br />
@@ -70,10 +83,23 @@
     const img    = canvas.toDataURL("image/png");
     // document.write('<img src="'+img+'"/>');
 
+    const volume = document.getElementById('volume').value;
+    const tempo = document.getElementById('tempo').value;
+
+    console.log('volume', volume, tempo)
+
     const url = 'http://localhost:5000/img2mus';
     fetch(url, {
       method: 'POST',
-      body: img
+      header: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        volume: volume,
+        tempo: tempo,
+        image: img
+      })
     }).then(response => response.json())
     .then(json => {
       console.log('response', json);
