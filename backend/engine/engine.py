@@ -55,28 +55,52 @@ def img_to_note(pixels, bar_dict):
     for key in pixel_range:
         pixel_range[key] = pixel_range[key]/total
 
-    print(pixel_range)
-
     sorted_pixel_list = list(reversed(sorted(pixel_range.items(), key=lambda x: x[1])))
-    print(sorted_pixel_list)
+
     key1 = ''
     key2 = ''
-    if sorted_pixel_list[0][1] >= 0.70:
-        key1 = sorted_pixel_list[0][1]
-    # top_2 = dict(sorted(pixel_range, key=pixel_range.get, reverse=True)[:2])
-    # print(top_2)
+    note = ''
+    if sorted_pixel_list[0][1] >= 0.55:
+        note = sorted_pixel_list[0][0]
+        if note == 'G' or note == 'E' or note == 'C':
+            note += '5'
+        else:
+            note += '4'
+    else:
+        key1 = sorted_pixel_list[0][0]
+        key2 = sorted_pixel_list[1][0]
+        top_keys = (key1, key2)
 
-im = Image.open("../../test/image.png")
-WIDTH = im.width
-LINE_VER_LEN = im.height
-pixel_list = c.make_pixel_list(list(im.getdata()))
-# gets the bar lines in format {0: (starting, ending)}
-bars = c.get_bar_coords(pixel_list)
-# for removing bars; list of all the lines that are a bar
-combined_bars = c.get_combined_bar_coords(pixel_list)
-# same as pixel_list but now vertical
-vertical_list = c.make_vertical_pixel_list(pixel_list)
-# remove staff bars
-c.remove_staffs(pixel_list, combined_bars)
+        if sorted(top_keys) == ['E','G']:
+            note = 'F5'
+        elif sorted(top_keys) == ['C','E']:
+            note = 'D5'
+        elif sorted(top_keys) == ['A','C']:
+            note = 'B4'
+        elif sorted(top_keys) == ['A','F']:
+            note = 'G4'
+        else:
+            note = 'E4'
 
-img_to_note(pixel_list, bars)
+    return note
+
+
+
+def main():
+    im = Image.open("../../test/image3.png")
+    WIDTH = im.width
+    LINE_VER_LEN = im.height
+    pixel_list = c.make_pixel_list(list(im.getdata()))
+    # gets the bar lines in format {0: (starting, ending)}
+    bars = c.get_bar_coords(pixel_list)
+    # for removing bars; list of all the lines that are a bar
+    combined_bars = c.get_combined_bar_coords(pixel_list)
+    # same as pixel_list but now vertical
+    vertical_list = c.make_vertical_pixel_list(pixel_list)
+    # remove staff bars
+    c.remove_staffs(pixel_list, combined_bars)
+
+    print(img_to_note(pixel_list, bars))
+
+if __name__ == '__main__':
+    main()
