@@ -62,12 +62,6 @@ def make_vertical_pixel_list(pixel_list):
 			vertical_pixel_list[j][i] = pixel_list[i][j]
 	return vertical_pixel_list
 
-def print_pixels(pixel_list):
-	for pixels in pixel_list:
-		for pixel in pixels:
-			print(pixel, end='')
-		print()
-
 def remove_staffs(pixel_list, staffs):
 	curr_staff = 0
 	for i in range(len(pixel_list)):

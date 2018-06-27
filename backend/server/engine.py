@@ -86,8 +86,7 @@ def img_to_note(pixels, bar_dict):
 
 
 
-def main():
-    im = Image.open("../../test/image3.png")
+def engine(im):
     WIDTH = im.width
     LINE_VER_LEN = im.height
     pixel_list = c.make_pixel_list(list(im.getdata()))
@@ -100,7 +99,4 @@ def main():
     # remove staff bars
     c.remove_staffs(pixel_list, combined_bars)
 
-    print(img_to_note(pixel_list, bars))
-
-if __name__ == '__main__':
-    main()
+    return [img_to_note(pixel_list, bars), 'Q']

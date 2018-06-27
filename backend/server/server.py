@@ -2,6 +2,7 @@ import uuid
 import base64
 import os
 import sys
+import engine
 from flask import Flask
 from flask import request
 from flask import jsonify
@@ -50,6 +51,7 @@ def parse_request():
 
     im = Image.open(BytesIO(base64.b64decode(image_encode)))
     im.save('test.png')
+    note_list = engine.engine(im)
     
     # constants
     track = 0
@@ -60,8 +62,7 @@ def parse_request():
 
     my_midi = MIDIFile(1)
     my_midi.addTempo(track, time, tempo)
-    prev_duration = 0
-    for counter, my_tuple in enumerate(sample_list):
+    for counter, my_tuple in enumerate(note_list):
         note = my_tuple[0]
         note_type = my_tuple[1]
         midi_note = note_to_midi[note]
