@@ -81,20 +81,16 @@ def img_to_note(pixels, bar_dict):
     return note
 
 def engine(im):
-    '''
-    Accepts the im object to the image
-    Returns the musical note as a list of tuples
-    '''
-    WIDTH = im.width
-    LINE_VER_LEN = im.height
+    WIDTH = 900
+    LINE_VER_LEN = 600
     pixel_list = c.make_pixel_list(list(im.getdata()))
     # gets the bar lines in format {0: (starting, ending)}
     bars = c.get_bar_coords(pixel_list)
     # for removing bars; list of all the lines that are a bar
-    combined_bars = c.get_combined_bar_coords(pixel_list)
+    #combined_bars = c.get_combined_bar_coords(pixel_list)
     # same as pixel_list but now vertical
-    vertical_list = c.make_vertical_pixel_list(pixel_list)
+    #vertical_list = c.make_vertical_pixel_list(pixel_list)
     # remove staff bars
-    c.remove_staffs(pixel_list, combined_bars)
+    #c.remove_staffs(pixel_list, combined_bars)
 
     return [img_to_note(pixel_list, bars), 'Q']

@@ -69,9 +69,9 @@ def remove_staffs(pixel_list, staffs):
 		if i in staffs:
 			pixel_list[i] = empty_list
 
-im = Image.open("../../sample/sample3.png")
-WIDTH = im.width
-LINE_VER_LEN = im.height
+#im = Image.open("test.png")
+WIDTH = 900
+LINE_VER_LEN = 600
 # pixel_list = make_pixel_list(list(im.getdata()))
 # # gets the bar lines in format {0: (starting, ending)}
 # bars = get_bar_coords(pixel_list)

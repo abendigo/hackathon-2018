@@ -49,9 +49,11 @@ def parse_request():
     #fh.write(image_encode.decode('base64'))
     #fh.close()
 
-    im = Image.open(BytesIO(base64.b64decode(image_encode)))
-    im.save('test.png')
-    note_list = engine.engine(im)
+    new_im = Image.open(BytesIO(base64.b64decode(image_encode)))
+    new_im.save('test.png')
+
+    #im = Image.open('test.png')
+    #note_list = engine.engine(new_im)
     
     # constants
     track = 0
@@ -62,7 +64,7 @@ def parse_request():
 
     my_midi = MIDIFile(1)
     my_midi.addTempo(track, time, tempo)
-    for counter, my_tuple in enumerate(note_list):
+    for counter, my_tuple in enumerate(sample_list):
         note = my_tuple[0]
         note_type = my_tuple[1]
         midi_note = note_to_midi[note]
