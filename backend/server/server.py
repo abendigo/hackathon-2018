@@ -8,6 +8,8 @@ from flask import jsonify
 from flask_cors import CORS
 from midiutil import MIDIFile
 from midi2audio import FluidSynth
+from PIL import Image
+from io import BytesIO
 
 app = Flask(__name__)
 CORS(app)
@@ -40,10 +42,14 @@ def hello():
 
 @app.route("/img2mus", methods = ['POST'])
 def parse_request():
-    #request.get_data()
-    #image_data = request.data
-    #image_data = request.json
     image_data_encode = request.json.get('image')
+    image_data_url, image_encode = image_data_encode.split(',')
+    #fh = open(file_name, "wb")
+    #fh.write(image_encode.decode('base64'))
+    #fh.close()
+
+    im = Image.open(BytesIO(base64.b64decode(image_encode)))
+    im.save('test.png')
     
     # constants
     track = 0
@@ -75,9 +81,5 @@ def parse_request():
     img_id = uuid.uuid4().hex
     file_name = img_id + '.png'
 
-    image_data_url, image_encode = image_data_encode.split(',')
-    fh = open(file_name, "wb")
-    fh.write(image_encode.decode('base64'))
-    fh.close()
 
     return jsonify({'audio': { 'content': encoded_midi }})
