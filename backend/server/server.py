@@ -4,6 +4,7 @@ import os
 import sys
 from flask import Flask
 from flask import request
+from flask import jsonify
 from flask_cors import CORS
 from midiutil import MIDIFile
 from midi2audio import FluidSynth
@@ -53,4 +54,4 @@ def parse_request():
     fh.write(image_data_encode.decode('base64'))
     fh.close()
 
-    return "Okay"
+    return jsonify({'audio': { 'content': encoded_midi }})
