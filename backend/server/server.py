@@ -40,15 +40,17 @@ def hello():
 
 @app.route("/img2mus", methods = ['POST'])
 def parse_request():
-    request.get_data()
-    image_data = request.data
+    #request.get_data()
+    #image_data = request.data
+    #image_data = request.json
+    image_data_encode = request.json.get('image')
     
     # constants
     track = 0
     channel = 0
     time = 0
-    tempo = 171
-    volume = 126
+    tempo = request.json.get('tempo')
+    volume = request.json.get('volume')
 
     my_midi = MIDIFile(1)
     my_midi.addTempo(track, time, tempo)
@@ -73,9 +75,9 @@ def parse_request():
     img_id = uuid.uuid4().hex
     file_name = img_id + '.png'
 
-    image_data_url, image_data_encode = image_data.split(',')
+    image_data_url, image_encode = image_data_encode.split(',')
     fh = open(file_name, "wb")
-    fh.write(image_data_encode.decode('base64'))
+    fh.write(image_encode.decode('base64'))
     fh.close()
 
     return jsonify({'audio': { 'content': encoded_midi }})
