@@ -11,7 +11,8 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 const audio = {
-    content: fs.readFileSync("public/audio/stereo.flac").toString('base64'),
+    // content: fs.readFileSync("public/audio/stereo.flac").toString('base64'),
+    content: fs.readFileSync("public/audio/test.wav").toString('base64'),
 };
 
 // app.use(bodyParser);
